@@ -2,6 +2,8 @@
 import {
   IonContent,
   IonHeader,
+  IonItem,
+  IonLabel,
   IonList,
   IonPage,
   IonTitle,
@@ -24,6 +26,9 @@ const { catFacts } = storeToRefs(useCatFactsStore());
     </IonHeader>
     <IonContent :fullscreen="true">
       <IonList>
+        <IonItem v-if="catFacts.length === 0">
+          <IonLabel>No cat facts today :(</IonLabel>
+        </IonItem>
         <CatFactItem
           v-for="(catFact, index) in catFacts"
           :key="index"

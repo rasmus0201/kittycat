@@ -2,17 +2,18 @@
 import {
   IonContent,
   IonHeader,
+  IonItem,
+  IonLabel,
   IonList,
   IonPage,
   IonTitle,
   IonToolbar,
 } from "@ionic/vue";
-import { storeToRefs } from "pinia";
 
 import CatFactItem from "@/components/CatFactItem.vue";
 import { useCatFactsStore } from "@/stores";
 
-const { favorites } = storeToRefs(useCatFactsStore());
+const catFacts = useCatFactsStore();
 </script>
 
 <template>
@@ -23,14 +24,18 @@ const { favorites } = storeToRefs(useCatFactsStore());
       </IonToolbar>
     </IonHeader>
     <IonContent :fullscreen="true">
-      <IonContent class="ion-padding"></IonContent>
       <IonList>
-        <CatFactItem
-          v-for="(catFact, index) in favorites"
-          :key="index"
-          :item="catFact"
-          :excerpt-length="50"
-        />
+        <IonItem v-if="catFacts.favorites.length === 0">
+          <IonLabel>No favorites yet</IonLabel>
+        </IonItem>
+        <template v-else>
+          <CatFactItem
+            v-for="(catFact, index) in catFacts.favorites"
+            :key="index"
+            :item="catFact"
+            :excerpt-length="50"
+          />
+        </template>
       </IonList>
     </IonContent>
   </IonPage>
