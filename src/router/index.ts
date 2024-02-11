@@ -29,11 +29,6 @@ const routes: RouteRecordRaw[] = [
         name: "favorites",
         component: () => import("@/views/tabs/FavoriteFactsPage.vue"),
       },
-      {
-        path: ":id",
-        name: "factDetails",
-        component: () => import("@/views/tabs/DetailedFactPage.vue"),
-      },
     ],
   },
 ];

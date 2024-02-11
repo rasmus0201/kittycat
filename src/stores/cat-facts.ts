@@ -1,5 +1,5 @@
 import { acceptHMRUpdate, defineStore } from "pinia";
-import { reactive, toRefs } from "vue";
+import { computed, reactive, toRefs } from "vue";
 
 import { getAllCatFacts } from "@/api/cat-facts";
 import { CatFact } from "@/types";
@@ -7,7 +7,6 @@ import { CatFact } from "@/types";
 interface State {
   status: "initial" | "loading" | "loaded" | "failed";
   catFacts: CatFact[];
-  favorites: CatFact[];
 }
 
 export const useCatFactsStore = defineStore(
@@ -16,8 +15,11 @@ export const useCatFactsStore = defineStore(
     const state = reactive<State>({
       status: "initial",
       catFacts: [],
-      favorites: [],
     });
+
+    const favorites = computed(() =>
+      state.catFacts.filter((fact) => fact.favorite),
+    );
 
     const load = async () => {
       state.status = "loading";
@@ -30,19 +32,35 @@ export const useCatFactsStore = defineStore(
 
         state.status = "loaded";
       } catch (error) {
+        console.log(error);
         state.status = "failed";
       }
     };
 
+    const setFavorite = (id: number, favorite: boolean) => {
+      state.catFacts = state.catFacts.map((fact) => {
+        if (fact.id !== id) {
+          return fact;
+        }
+
+        return {
+          ...fact,
+          favorite,
+        };
+      });
+    };
+
     return {
       ...toRefs(state),
+      favorites,
 
       load,
+      setFavorite,
     };
   },
   {
     persist: {
-      paths: ["catFacts", "favorites"],
+      paths: ["catFacts", "status"],
     },
   },
 );
