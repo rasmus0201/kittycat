@@ -9,7 +9,6 @@ Make sure ionic is installed on your system.
 3. `ionic serve`
 
 
-### TODO
-
+### Making the apps
 1. Make native app using `ionic capacitor`
 2. Generate app icon and splash screens using `cordova-res --skip-config --copy`
