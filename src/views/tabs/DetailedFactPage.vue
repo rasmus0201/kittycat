@@ -2,35 +2,35 @@
 import {
   IonContent,
   IonHeader,
-  IonList,
   IonPage,
   IonTitle,
   IonToolbar,
 } from "@ionic/vue";
 import { storeToRefs } from "pinia";
+import { computed } from "vue";
+import { useRoute } from "vue-router";
 
 import CatFactItem from "@/components/CatFactItem.vue";
 import { useCatFactsStore } from "@/stores";
 
 const { catFacts } = storeToRefs(useCatFactsStore());
+
+const route = useRoute();
+
+const catFact = computed(() =>
+  catFacts.value.find((fact) => fact.id.toString() === route.params?.id),
+);
 </script>
 
 <template>
-  <IonPage>
+  <IonPage v-if="catFact">
     <IonHeader>
       <IonToolbar>
-        <IonTitle>Cat Facts</IonTitle>
+        <IonTitle>Cat Fact Details</IonTitle>
       </IonToolbar>
     </IonHeader>
     <IonContent :fullscreen="true">
-      <IonList>
-        <CatFactItem
-          v-for="(catFact, index) in catFacts"
-          :key="index"
-          :item="catFact"
-          :excerpt-length="50"
-        />
-      </IonList>
+      <CatFactItem :item="catFact" />
     </IonContent>
   </IonPage>
 </template>

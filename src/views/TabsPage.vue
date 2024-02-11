@@ -1,24 +1,47 @@
 <script setup lang="ts">
-import { IonTabBar, IonTabButton, IonTabs, IonIcon, IonPage, IonRouterOutlet } from '@ionic/vue';
-import { home, starOutline } from 'ionicons/icons';
-import { useRoute } from 'vue-router';
+import {
+  IonIcon,
+  IonPage,
+  IonRouterOutlet,
+  IonTabBar,
+  IonTabButton,
+  IonTabs,
+} from "@ionic/vue";
+import { home, starOutline } from "ionicons/icons";
+import { useRoute } from "vue-router";
 
 const route = useRoute();
 </script>
 
 <template>
-  <ion-page>
-    <ion-tabs>
-      <ion-router-outlet></ion-router-outlet>
-      <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="all" href="/facts/all" :selected="route.name === 'all'">
-          <ion-icon aria-hidden="true" aria-label="All cat facts view" :icon="home" />
-        </ion-tab-button>
+  <IonPage>
+    <IonTabs>
+      <IonRouterOutlet></IonRouterOutlet>
+      <IonTabBar slot="bottom">
+        <IonTabButton
+          tab="all"
+          href="/facts/all"
+          :selected="route.name === 'all'"
+        >
+          <IonIcon
+            aria-hidden="true"
+            aria-label="All cat facts view"
+            :icon="home"
+          />
+        </IonTabButton>
 
-        <ion-tab-button tab="favorites" href="/facts/favorites" :selected="route.name === 'favorites'">
-          <ion-icon aria-hidden="true" aria-label="Favorites view" :icon="starOutline" />
-        </ion-tab-button>
-      </ion-tab-bar>
-    </ion-tabs>
-  </ion-page>
+        <IonTabButton
+          tab="favorites"
+          href="/facts/favorites"
+          :selected="route.name === 'favorites'"
+        >
+          <IonIcon
+            aria-hidden="true"
+            aria-label="Favorites view"
+            :icon="starOutline"
+          />
+        </IonTabButton>
+      </IonTabBar>
+    </IonTabs>
+  </IonPage>
 </template>

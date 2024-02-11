@@ -1,22 +1,37 @@
 <script setup lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
+import {
+  IonContent,
+  IonHeader,
+  IonList,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+} from "@ionic/vue";
+import { storeToRefs } from "pinia";
+
+import CatFactItem from "@/components/CatFactItem.vue";
+import { useCatFactsStore } from "@/stores";
+
+const { favorites } = storeToRefs(useCatFactsStore());
 </script>
 
 <template>
-  <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Favorites</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">ion titlte</ion-title>
-        </ion-toolbar>
-      </ion-header>
-
-      <p>...</p>
-    </ion-content>
-  </ion-page>
+  <IonPage>
+    <IonHeader>
+      <IonToolbar>
+        <IonTitle>Favorites</IonTitle>
+      </IonToolbar>
+    </IonHeader>
+    <IonContent :fullscreen="true">
+      <IonContent class="ion-padding"></IonContent>
+      <IonList>
+        <CatFactItem
+          v-for="(catFact, index) in favorites"
+          :key="index"
+          :item="catFact"
+          :excerpt-length="50"
+        />
+      </IonList>
+    </IonContent>
+  </IonPage>
 </template>
